@@ -1,7 +1,7 @@
-from validators.sustentabilty_classification import define_water_sustentabilty_classification
-from validators.sustentabilty_classification import define_energy_sustentabilty_classification
-from validators.sustentabilty_classification import define_recycable_sustentabilty_classification
-from validators.sustentabilty_classification import define_transportation_sustentability_classification
+from validators.sustentability_classification import define_water_sustentabilty_classification
+from validators.sustentability_classification import define_energy_sustentabilty_classification
+from validators.sustentability_classification import define_recycable_sustentabilty_classification
+from validators.sustentability_classification import define_transportation_sustentability_classification
 from utils.energy_consumption                import define_energy_consumption
 from utils.water_consumption                 import define_water_consumption
 from utils.trash_generation                  import define_non_recycable_trash, define_percentage_recycable

@@ -28,4 +28,4 @@ def define_percentage_recycable() -> float:
                 print('Valor inválido. Informe um numero entre 0 e 100.')
             else:
                 is_valid_input = True
-                return recycable
+                return recycable
