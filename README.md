@@ -27,6 +27,132 @@ O projeto integrador tem como objetivo principal o desenvolvimento de um sistema
   </li>
 </ul>
 
+<hr />
+
+<h4>Modelo do versionamento</h4>
+
+```mermaid
+gitGraph
+    commit id: "Criação do repositório"
+
+    branch release
+    branch develop
+
+    checkout develop
+    commit id: "Commit em develop"
+
+    branch feature/data
+    checkout feature/data
+    commit id: "Criada classe para validação de data"
+    checkout develop
+    merge feature/data 
+
+    branch feature/classificacao_consumo
+    checkout feature/classificacao_consumo
+    commit id: "Criadas funções para classificação de sustentabilidade"
+    checkout develop
+    merge feature/classificacao_consumo
+
+
+    branch feature/geracao_lixo
+    checkout feature/geracao_lixo
+    commit id: "Criada as funções para validação da inserção de dados relacionados à geração de lixo"
+    checkout develop
+    merge feature/geracao_lixo 
+
+    branch feature/consumo_agua
+    checkout feature/consumo_agua
+    commit id: "Criada função para validar consumo de água"
+    checkout develop
+    merge feature/consumo_agua
+
+    branch feature/consumo_energia
+    checkout feature/consumo_energia
+    commit id: "Criado arquivo para validação de consumo de energia"
+    checkout develop
+    merge feature/consumo_energia
+
+    branch feature/uso_transportes
+    checkout feature/uso_transportes
+    commit id: "Recurso responsável por realizar a validação do uso dos transportes"
+    checkout develop
+    merge feature/uso_transportes 
+
+    checkout release
+    merge develop id: "Desenvolvimento da fase 1 incluído na release branch"
+
+    checkout main
+    merge release id: "Release v1.0.0a"
+
+    checkout develop
+    commit id: "Início da fase 2"
+
+    branch feature/integracao_bd
+    checkout feature/integracao_bd
+    commit id: "Integração do código com BD"
+    checkout develop
+    merge feature/integracao_bd
+
+    branch feature/create
+    checkout feature/create
+    commit id: "Criação (C) de registro no BD"
+    checkout develop
+    merge feature/create
+
+    branch feature/read
+    checkout feature/read
+    commit id: "Visualização (R) de histórico no BD"
+    checkout develop
+    merge feature/read 
+
+    branch feature/update
+    checkout feature/update
+    commit id: "Atualização (U) de registro no BD"
+    checkout develop
+    merge feature/update 
+
+    branch feature/delete
+    checkout feature/delete
+    commit id: "Deleção (D) de registro no BD"
+    checkout develop
+    merge feature/delete 
+
+    checkout release
+    merge develop id: "Desenvolvimento da fase 2 incluído na release"
+
+    checkout main
+    merge release id: "Release v1.0.1a"
+
+    checkout develop
+    commit id: "Início da fase 3"
+
+    branch feature/menu
+    checkout feature/menu
+    commit id: "Desenvolvimento do menu"
+    checkout develop
+    merge feature/menu 
+
+    branch feature/media
+    checkout feature/media
+    commit id: "Desenvolvimento do calculo de média de consumo"
+    checkout develop
+    merge feature/media 
+
+    branch feature/finalizacao
+    checkout feature/finalizacao
+    commit id: "Finalização do desenvolvimento e testes"
+    checkout develop
+    merge feature/finalizacao 
+
+    checkout release
+    merge develop id: "Inclusão da fase 3 na release branch"
+
+    checkout main
+    merge release id: "Release v1.0.2"
+
+
+```
+
 <hr/>
 <h3>Autores:</h3>
 
@@ -73,3 +199,14 @@ O projeto integrador tem como objetivo principal o desenvolvimento de um sistema
       </a><br>
     </td>
    </table>
+
+
+
+
+
+
+
+
+
+
+
