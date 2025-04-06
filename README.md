@@ -29,7 +29,7 @@ O projeto integrador tem como objetivo principal o desenvolvimento de um sistema
 
 <hr />
 
-<h4>Modelo do versionamento</h4>
+<h4>Modelo do versionamento - Todas as fases do projeto</h4>
 
 ```mermaid
 gitGraph
