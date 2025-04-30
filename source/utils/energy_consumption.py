@@ -1,3 +1,4 @@
+from utils.tools import check_float_values
 
 def define_energy_consumption() -> float:
     
@@ -5,12 +6,19 @@ def define_energy_consumption() -> float:
     
     while not is_valid_input:
         try:
-            energy_consumption = float(input('\nQuantos kWh de energia você consumiu hoje?: '))
+            energy_consumption_raw = input('\nQuantos kWh de energia você consumiu hoje?: ')
+
+            energy_consumption = float(check_float_values(energy_consumption_raw))
+
+        except TypeError:
+            print('[ Valor inválido para o consumo de energia! Tente novamente. ]')
+        
         except ValueError:
-            print('Informa um valor válido para o consumo de energia')
+            print('[ Valor inválido para o consumo de energia! Tente novamente. ]')
+        
         else:
             if energy_consumption < 0:
-                print('Informe um valor maior ou igual a zero')
+                print('[ Informe um valor maior ou igual a zero! Tente novamente. ]')
             else:
                 is_valid_input = True
                 return energy_consumption
