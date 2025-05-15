@@ -200,13 +200,53 @@ gitGraph
     </td>
    </table>
 
+<br>
+<hr>
+<br>
+
+## 🚀 Como rodar a aplicação localmente?
+
+### 📄 1. Configurar variáveis de ambiente
+
+Crie um arquivo `.env` dentro do diretório `source/`, contendo as seguintes variáveis:
+
+```bash
+DB_HOST=ip_banco_de_dados\
+DB_PORT=porta_banco_de_dados\
+DB_USER=usuario_banco_de_dados\
+DB_PASSWORD=senha_banco_de_dados 
+DB_DATABASE=database_que_sera_utilizada
+```
 
 
+### 🐍 2. Criar e ativar o ambiente virtual
 
+```bash
+python -m venv .venv
+```
 
+Ative o ambiente virtual:
 
+- Linux/macOS:
 
+```bash
+source .venv/bin/activate
+```
 
+- Windows:
 
+```
+.venv\Scripts\activate
+``` 
 
+### 📦 3. Instalar dependências
 
+```bash
+pip install -r requirements.txt
+``` 
+
+### ▶️ 4. Executar a aplicação
+
+```bash
+python source/main.py
+``` 
