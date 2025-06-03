@@ -7,7 +7,6 @@ Projeto integrador do primeiro semestre do curso de Sistemas de Informação da 
 <h2>Sobre o projeto</h2>
 O projeto integrador tem como objetivo principal o desenvolvimento de um sistema de monitoramento de sustentabilidade pessoal, utilizando tecnologias como Python, MySQL para armazenar os dados (banco de dados), Git e GitHub para o versionamento do sistema e Trello para o gerenciamento do projeto.
 
-
 <ul>
   <li>
     Coletar e analisar dados de consumo de água, energia elétrica, geração de resíduos e uso de transporte dos usuários.
