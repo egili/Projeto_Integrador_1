@@ -128,3 +128,142 @@ def which_date_use():
                 is_year_valid  = False 
             else:
                 return formatted_date  
+
+
+def which_date_use_for_update():
+    while True:
+        is_day_valid   = False
+        is_month_valid = False
+        is_year_valid  = False
+
+        while not is_day_valid or not is_month_valid or not is_year_valid:
+            try:
+                print('[ Insira uma data para a editar. ]\n')
+
+                while not is_day_valid:
+                    try:
+                        day = int(input('+ Dia: '))
+                    except ValueError:
+                        print('[ Erro: Valor inválido para o dia! Tente novamente. ]\n')
+                    else:
+                        if day > 0 and day < 32:
+                            is_day_valid = True
+                        elif day > 31:
+                            print('[ Erro: Valor inválido para o dia! Um mês possuí até 31 dias. Tente novamente. ]\n')
+                            continue
+                        else:
+                            print('[ Erro: Valor inválido para o dia! Tente novamente. ]\n')
+                            continue
+                while not is_month_valid:
+                    try:
+                        month = int(input('+ Mês: '))
+                    except ValueError:
+                        print('[ Erro: Valor inválido para o mês! Tente novamente. ]\n')
+                    else:
+                        if month > 0 and month <= 12:
+                            is_month_valid = True
+                        elif month > 12:
+                            print('[ Erro: Valor inválido para o mês! Um ano possuí até 12 meses. Tente novamente. ]\n')
+                            continue
+                        else:
+                            print('[ Erro: Valor inválido para o mês! Tente novamente. ]\n')
+                            continue
+                while not is_year_valid:
+                    try:
+                        year = int(input('+ Ano: '))
+                    except ValueError:
+                        print('[ Erro: Valor inválido para o ano! Tente novamente. ]\n')
+                    else:
+                        if year > 0 and year <= 9999:
+                            is_year_valid = True
+                        elif year > 9999:
+                            print('[ Erro: Valor inválido para o ano! Tente novamente. ]\n')
+                        else:
+                            print('[ Erro: Valor inválido para o ano! Tente novamente. ]\n')
+                            continue
+
+            except ValueError:
+                print('Erro: Digite apenas números para dia, mês e ano.')
+                press_enter_to_continue()
+
+                continue 
+
+            formatted_date = format_given_date(day, month, year)
+
+            if formatted_date.startswith('Erro'):
+                print(f'[ {formatted_date} ]')
+                press_enter_to_continue()
+                is_day_valid   = False
+                is_month_valid = False
+                is_year_valid  = False 
+            else:
+                return formatted_date  
+
+def which_date_use_for_exclusion():
+    while True:
+        is_day_valid   = False
+        is_month_valid = False
+        is_year_valid  = False
+
+        while not is_day_valid or not is_month_valid or not is_year_valid:
+            try:
+                print('[ Insira uma data para a exlcusão. ]\n')
+
+                while not is_day_valid:
+                    try:
+                        day = int(input('+ Dia: '))
+                    except ValueError:
+                        print('[ Erro: Valor inválido para o dia! Tente novamente. ]\n')
+                    else:
+                        if day > 0 and day < 32:
+                            is_day_valid = True
+                        elif day > 31:
+                            print('[ Erro: Valor inválido para o dia! Um mês possuí até 31 dias. Tente novamente. ]\n')
+                            continue
+                        else:
+                            print('[ Erro: Valor inválido para o dia! Tente novamente. ]\n')
+                            continue
+                while not is_month_valid:
+                    try:
+                        month = int(input('+ Mês: '))
+                    except ValueError:
+                        print('[ Erro: Valor inválido para o mês! Tente novamente. ]\n')
+                    else:
+                        if month > 0 and month <= 12:
+                            is_month_valid = True
+                        elif month > 12:
+                            print('[ Erro: Valor inválido para o mês! Um ano possuí até 12 meses. Tente novamente. ]\n')
+                            continue
+                        else:
+                            print('[ Erro: Valor inválido para o mês! Tente novamente. ]\n')
+                            continue
+                while not is_year_valid:
+                    try:
+                        year = int(input('+ Ano: '))
+                    except ValueError:
+                        print('[ Erro: Valor inválido para o ano! Tente novamente. ]\n')
+                    else:
+                        if year > 0 and year <= 9999:
+                            is_year_valid = True
+                        elif year > 9999:
+                            print('[ Erro: Valor inválido para o ano! Tente novamente. ]\n')
+                        else:
+                            print('[ Erro: Valor inválido para o ano! Tente novamente. ]\n')
+                            continue
+
+            except ValueError:
+                print('Erro: Digite apenas números para dia, mês e ano.')
+                press_enter_to_continue()
+
+                continue 
+
+            formatted_date = format_given_date(day, month, year)
+
+            if formatted_date.startswith('Erro'):
+                print(f'[ {formatted_date} ]')
+                press_enter_to_continue()
+                is_day_valid   = False
+                is_month_valid = False
+                is_year_valid  = False 
+            else:
+                return formatted_date  

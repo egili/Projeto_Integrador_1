@@ -6,13 +6,15 @@ from utils.energy_consumption                 import define_energy_consumption
 from utils.water_consumption                  import define_water_consumption
 from utils.trash_generation                   import define_non_recycable_trash, define_percentage_recycable
 from utils.transportation                     import define_used_transport
-from utils.define_date                        import which_date_use
-from utils.tools                              import clear_screen, press_enter_to_continue
+from utils.define_date                        import which_date_use, which_date_use_for_exclusion
+from utils.tools                              import clear_screen, press_enter_to_continue, format_date, style_for_monitoring
 from database.connection                      import conn, cursor
 from database.create_tables                   import create_table_monitoring, create_table_monitoring_classifications
 from database.insert_new_monitoring           import insert_monitoring                
 from database.verify_monitoring_exists        import verify_if_exits
-from database.select_monitoring               import select_all_monitoring
+from database.select_monitoring               import select_all_monitoring, select_monitoring_dates, select_specif_monitoring
+from database.delete_monitoring               import delete_from_db
+from menu.option_3                            import update_option
 
 def main():
     create_table_monitoring()
@@ -26,7 +28,9 @@ def main():
             print("+------------------------------------------+")
             print("| [1] Realizar um novo monitoramento       |")
             print("| [2] Visualizar monitoramentos anteriores |")
-            print("| [3] Sair                                 |")
+            print("| [3] Editar um monitoramento              |")
+            print("| [4] Excluir um monitoramento             |")
+            print("| [5] Sair                                 |")
             print("+------------------------------------------+")
             user_choose = input("\n > ")
             
@@ -34,8 +38,7 @@ def main():
             if user_choose == "1":
                 raw_date = which_date_use()
 
-                splited_date = raw_date.split('/')
-                date_for_db = f'{splited_date[2]}-{splited_date[1]}-{splited_date[0]}'
+                date_for_db = format_date(raw_date)
 
                 if verify_if_exits(date_for_db):
                     clear_screen()
@@ -124,14 +127,50 @@ def main():
                         press_enter_to_continue()
 
                     elif store_in_db_choose == 'N':
-                        clear_screen()
+                        while True:
+                            clear_screen()
 
-                        print('+---------------------------+')
-                        print('| Monitoramento descartado! |')
-                        print('+---------------------------+')
+                            print('+---------------------------------------------------------+')
+                            print('| Tem certeza que deseja descartar o monitoramento? (S/N) |')
+                            print('|                                                         |')
+                            print('| * CASO VOCÊ CONFIRME, O MONITORAMENTO SEJA DESCARTADO * |')
+                            print('+---------------------------------------------------------+')
 
-                        press_enter_to_continue()
+                            discard_confirm = input('\n> ').upper()
 
+                            if discard_confirm != 'N' and discard_confirm != 'S':
+                                print('\n[ Opção inválida. Digite (S) ou (N). ]\n')
+
+                                press_enter_to_continue()
+
+                                continue
+                            
+                            elif discard_confirm == 'S':
+
+                                clear_screen()
+
+                                print('+---------------------------+')
+                                print('| Monitoramento descartado! |')
+                                print('+---------------------------+')
+
+                                press_enter_to_continue()
+
+                                break
+
+                            else:
+
+                                clear_screen()
+
+                                if insert_monitoring(date_for_db, water_consumption, energy_consumption, non_recycable_trash, valid_recycable, used_transport, transportation_sustentability_classification, recycable_sustentabilty_classification, energy_sustentabilty_classification, water_sustentabilty_classification):
+                                    print('+----------------------------------+')
+                                    print('| Monitoramento salvo com sucesso! |')
+                                    print('+----------------------------------+')
+
+                                    press_enter_to_continue()
+                                else:                            
+                                    press_enter_to_continue()
+
+                                break
                         break
 
                     else:
@@ -148,57 +187,18 @@ def main():
 
                         break
 
+                    break
+
             elif user_choose == "2":
                 clear_screen()
 
                 monitoring_list = select_all_monitoring()
 
-                if len(monitoring_list) > 0:
+                if len(monitoring_list[0]) > 0:
 
-                    for item in monitoring_list:
-                        number_list = [len(str(item[0])),len(str(item[1])),len(str(item[2])),len(str(item[3])),len(str(item[4])),len(str(item[5]))]
-                        high_len = max(number_list)
+                    style_for_monitoring(monitoring_list[0], monitoring_list[1])
 
-                        print('+' + ('-' * (29 + high_len)) + '+')
-                        print(f'| Data: {item[0]}', end="")
-                        i = 0 
-                        while i < ((29 + high_len) - 17):
-                            print(' ', end="")
-                            i+=1
-                        print('|')
-                        print(f'| Consumo de água: {item[1]}', end='') 
-                        i = 0
-                        while i < ((29 + high_len) - (18 + len(str(item[1])))):
-                            print(' ', end="")
-                            i+=1
-                        print('|') 
-                        print(f'| Consumo de energia: {item[2]}', end="")
-                        i = 0
-                        while i < ((29 + high_len) - (21 + len(str(item[2])))):
-                            print(' ', end="")
-                            i+=1
-                        print('|') 
-                        print(f'| Resíduos não reciclaveis: {item[3]}', end="")
-                        i = 0
-                        while i < (high_len - len(str(item[3]))):
-                            print(' ', end="")
-                            i+=1
-                        print('  |')
-                        print(f'| Resíduo reciclável: {item[4]}', end="")
-                        i = 0
-                        while i < ((29 + high_len) - (21 + len(str(item[4])))):
-                            print(" ", end="")
-                            i+=1
-                        print('|')
-                        print(f'| Uso de transporte: {item[5]}', end="")
-                        i = 0
-                        while i < ((29 + high_len) - (20 + len(str(item[5])))):
-                            print(" ", end="")
-                            i+=1
-                        print('|')
-                        print('+' + ('-' * (29 + high_len)) + '+\n')
-
-                    print('\n+ Número de monitoramentos: ', len(monitoring_list))
+                    print('\n+ Número de monitoramentos: ', len(monitoring_list[0]))
 
                 else:
                     print('[ Não existem monitoramentos no histórico! Realize um monitoramento e volte para essa opção mais tarde. ]')
@@ -206,12 +206,106 @@ def main():
                 press_enter_to_continue()
 
             elif user_choose == "3":
+                update_option()
+
+            elif user_choose == "4":
+                dates_for_exlusion = select_monitoring_dates()
+
+                monitoring_exclusion = 0
+                while monitoring_exclusion == 0:
+                    clear_screen()
+
+                    if len(dates_for_exlusion) > 0:
+
+                        print("+----------------------------------+")
+                        print("| Datas disponíveis para exclusão: |")
+                        print("+----------------------------------+")
+                        print("|                                  |")
+
+                        for date in dates_for_exlusion:
+                            if len(date[0].strftime('%d/%m/%Y')) < 10:
+                                print(f"|          * {date[0].strftime('%d/%m/%Y')} *          " + (" " * (10 - len(date[0].strftime('%d/%m/%Y')))) + "|")
+                            else:
+                                print(f"|          * {date[0].strftime('%d/%m/%Y')} *          |")
+                            print("|                                  |")
+                        print("+----------------------------------+")
+
+                        raw_exclusion_date = which_date_use_for_exclusion()
+
+                        exclusion_choose = format_date(raw_exclusion_date)
+
+                        exclusion_monitoring_result = select_specif_monitoring(exclusion_choose)
+
+                        clear_screen()
+
+                        if len(exclusion_monitoring_result[0]) > 0:
+                            while True:
+                                clear_screen()
+
+                                style_for_monitoring(exclusion_monitoring_result[0], exclusion_monitoring_result[1])
+
+                                print("[ Você tem certeza que deseja excluir esse monitoramento? (S/N) ]")
+
+                                confirmation_exclude = input("\n> ").upper()
+                                
+                                if confirmation_exclude != 'N' and confirmation_exclude != 'S':
+                                    print('\n[ Opção inválida. Digite (S) ou (N). ]\n')
+
+                                    press_enter_to_continue()
+
+                                    continue
+
+                                elif confirmation_exclude == 'N':
+                                    clear_screen()
+
+                                    print("+---------------------+")
+                                    print("| Operação cancelada! |")
+                                    print("+---------------------+")
+
+                                    press_enter_to_continue()
+
+                                    monitoring_exclusion = 1
+
+                                    break
+
+                                else:
+                                    delete_from_db(exclusion_choose)
+
+                                    clear_screen()
+
+                                    print("+-------------------------------------+")
+                                    print("| Monitoramento deletado com sucesso! |")
+                                    print("+-------------------------------------+")
+
+                                    press_enter_to_continue()
+
+                                    monitoring_exclusion = 1
+
+                                    break
+                        else:
+                            clear_screen()
+                            
+                            print("+---------------------------------------------" + ("-" * len(raw_exclusion_date)) + "+")
+                            print(f"| Não existe nenhum monitoramento com a data {raw_exclusion_date} |")
+                            print("+---------------------------------------------" + ("-" * len(raw_exclusion_date)) + "+")
+
+                            press_enter_to_continue()
+
+                    else:
+                        print("[ Não existem monitoramentos no histórico! Realize um monitoramento e volte para essa opção mais tarde. ]")
+
+                        press_enter_to_continue()
+
+                        monitoring_exclusion = 1
+
+            elif user_choose == "5":
                 conn.close()
                 cursor.close()
                 
                 clear_screen()
 
                 break
+
             else:
                 print("\n A opção digitada não existe! Escolha apenas entre os itens do menu.")
                 press_enter_to_continue()
